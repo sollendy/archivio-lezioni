@@ -22,10 +22,45 @@ createApp({
     const msgErrore  = ref('');
 
     /* utilità */
-    function formatData(iso) {
-      if (!iso) return '';
-      const [y, m, d] = iso.split('-');
-      return `${d}/${m}/${y}`;
+    const FORMATI_INGRESSO = [
+      { regex: /^(\d{4})-(\d{2})-(\d{2})$/, ordine: ['y','m','d'] }, // ISO:   YYYY-MM-DD
+      { regex: /^(\d{2})\/(\d{2})\/(\d{4})$/, ordine: ['d','m','y'] }, // IT:    DD/MM/YYYY
+      { regex: /^(\d{2})-(\d{2})-(\d{4})$/, ordine: ['d','m','y'] }, // EU:    DD-MM-YYYY
+      { regex: /^(\d{2})\.(\d{2})\.(\d{4})$/, ordine: ['d','m','y'] }, // PUNTO: DD.MM.YYYY
+    ];
+
+    function parseData(str) {
+      if (typeof str !== 'string' || !str.trim()) return null;
+      for (const { regex, ordine } of FORMATI_INGRESSO) {
+        const match = str.trim().match(regex);
+        if (match) {
+          const p = { [ordine[0]]: match[1], [ordine[1]]: match[2], [ordine[2]]: match[3] };
+          const data = new Date(`${p.y}-${p.m}-${p.d}`);
+          if (!isNaN(data.getTime())) return data;
+        }
+      }
+      return null;
+    }
+
+    function formatData(valore, formato = 'it') {
+      if (valore === null || valore === undefined) return '';
+      if (typeof valore !== 'string' && !(valore instanceof Date)) return '';
+
+      const data = valore instanceof Date ? valore : parseData(valore);
+      if (!data) return '';
+
+      const d = String(data.getDate()).padStart(2, '0');
+      const m = String(data.getMonth() + 1).padStart(2, '0');
+      const y = data.getFullYear();
+
+      const formati = {
+        'it':   `${d}/${m}/${y}`,
+        'iso':  `${y}-${m}-${d}`,
+        'eu':   `${d}.${m}.${y}`,
+        'long': data.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' }),
+      };
+
+      return formati[formato] ?? formati['it'];
     }
 
     /* fetch edizione */
