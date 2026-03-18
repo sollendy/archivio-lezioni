@@ -1,0 +1,56 @@
+body {
+  background-color: #f4f6f8;
+}
+
+/* Titolo pagina */
+.page-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+/* Schede statistiche riepilogo */
+.stat-card {
+  background: #f0f4ff;
+  border: none;
+  border-radius: 8px;
+  text-align: center;
+  padding: .85rem 1rem;
+}
+
+.stat-label {
+  font-size: .7rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: #6b7280;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2c5ee8;
+  line-height: 1.2;
+  margin-top: .15rem;
+}
+
+.stat-value.verde { color: #16a34a; }
+.stat-value.rosso { color: #dc2626; }
+
+/* Gruppo radio presenza */
+.radio-presence {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  padding: .45rem .6rem;
+  border: 1px solid #dee2e6;
+  border-radius: .375rem;
+  background: #fff;
+  height: calc(1.5em + .75rem + 2px); /* uguale a .form-select */
+}
+
+/* Testo loading */
+.text-loading {
+  color: #9ca3af;
+  font-style: italic;
+  font-size: .9rem;
+}

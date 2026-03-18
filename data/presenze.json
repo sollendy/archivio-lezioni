@@ -1,0 +1,12 @@
+[
+    {
+        "lezione_id": 1,
+        "partecipante_id": 2,
+        "presente": true
+    },
+    {
+        "lezione_id": 2,
+        "partecipante_id": 1,
+        "presente": false
+    }
+]
